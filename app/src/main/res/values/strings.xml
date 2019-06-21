@@ -1,0 +1,27 @@
+<resources>
+    <string name="app_name">ChatsApp</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="login_email">Email</string>
+    <string name="login_password">Password</string>
+    <string name="btn_login">Login</string>
+    <string name="btn_register">Create Account</string>
+    <string name="tv_forgot_password">Forgot Password?</string>
+    <string name="tv_new_account">Need new account?</string>
+    <string name="tv_have_account">Already have an account?</string>
+    <string name="tv_login_using">Or login using your</string>
+    <string name="tv_phone_login">Phone</string>
+
+
+    //Menu
+    <string name="find_friends">Find Friends</string>
+    <string name="settings_option">Settings</string>
+    <string name="log_out">Logout</string>
+    <string name="create_group">Create Group</string>
+
+    //Settings
+    <string name="btn_update_settings">Update</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+</resources>

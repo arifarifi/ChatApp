@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+
+    <TextView
+        android:id="@+id/receiver_message_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentStart="true"
+        android:layout_marginTop="7dp"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="100dp"
+        android:background="@drawable/receiver_messages_layout"
+        android:text="Receiver Messages Here"
+        android:paddingVertical="8dp"
+        android:paddingHorizontal="13dp"
+        android:textSize="16sp"
+        android:textColor="#5C5C5C"/>
+
+    <ImageView
+        android:id="@+id/message_sender_image_view"
+        android:layout_width="250dp"
+        android:layout_height="250dp"
+        android:layout_alignParentEnd="true"
+        android:layout_marginVertical="7dp"
+        android:layout_marginRight="20dp"
+        android:scaleType="centerCrop"
+        android:padding="5dp"
+        android:background="@drawable/sender_image_layout"
+        />
+    <ImageView
+        android:id="@+id/message_sender_file_view"
+        android:layout_width="100dp"
+        android:layout_height="40dp"
+        android:layout_alignParentEnd="true"
+        android:layout_marginVertical="7dp"
+        android:layout_marginRight="20dp"
+        android:paddingVertical="5dp"
+        android:paddingLeft="50dp"
+        android:src="@drawable/pdf"
+        android:background="@drawable/sender_image_layout"
+        />
+
+    <ImageView
+        android:id="@+id/message_receiver_file_view"
+        android:layout_width="100dp"
+        android:layout_height="40dp"
+        android:layout_alignParentStart="true"
+        android:layout_marginVertical="7dp"
+        android:layout_marginLeft="20dp"
+        android:paddingVertical="5dp"
+        android:paddingRight="50dp"
+        android:src="@drawable/pdf"
+        android:background="@drawable/receiver_image_layout"
+        />
+
+    <ImageView
+        android:id="@+id/message_receiver_image_view"
+        android:layout_width="250dp"
+        android:layout_height="250dp"
+        android:layout_alignParentStart="true"
+        android:layout_marginVertical="7dp"
+        android:layout_marginLeft="20dp"
+        android:scaleType="centerCrop"
+        android:padding="5dp"
+        android:background="@drawable/receiver_image_layout"
+        />
+
+    <TextView
+        android:id="@+id/sender_message_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:textAlignment="viewEnd"
+        android:layout_marginTop="7dp"
+        android:layout_alignParentTop="@id/receiver_message_text"
+        android:background="@drawable/sender_messages_layout"
+        android:text="Sender Message Here"
+        android:layout_marginLeft="100dp"
+        android:textSize="16sp"
+        android:paddingVertical="8dp"
+        android:paddingHorizontal="20dp"
+        android:layout_marginRight="20dp"
+        android:textColor="#333333"/>
+
+
+    <com.google.android.gms.maps.MapView
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:map="http://schemas.android.com/apk/res-auto"
+        android:id="@+id/sender_map_view"
+        android:layout_width="match_parent"
+        android:layout_height="200dp"
+        android:padding="5dp"
+        android:background="@drawable/sender_image_layout"
+        android:clickable="true"
+        map:uiCompass="true"
+        android:layout_alignParentEnd="true"
+        android:layout_marginVertical="7dp"
+        android:layout_marginRight="20dp"
+        android:layout_marginLeft="80dp"
+        />
+
+    <com.google.android.gms.maps.MapView
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:map="http://schemas.android.com/apk/res-auto"
+        android:id="@+id/receiver_map_view"
+        android:layout_width="match_parent"
+        android:layout_height="200dp"
+        android:padding="5dp"
+        android:background="@drawable/sender_image_layout"
+        android:clickable="true"
+        map:uiCompass="true"
+        android:layout_alignParentStart="true"
+        android:layout_marginVertical="7dp"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="80dp"
+        />
+
+</RelativeLayout>

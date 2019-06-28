@@ -5,8 +5,8 @@
     android:layout_height="wrap_content">
 
 
-    <TextView
-        android:id="@+id/receiver_message_text"
+    <RelativeLayout
+        android:id="@+id/receiver_message_container"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
@@ -14,12 +14,29 @@
         android:layout_marginTop="7dp"
         android:layout_marginLeft="20dp"
         android:layout_marginRight="100dp"
-        android:background="@drawable/receiver_messages_layout"
-        android:text="Receiver Messages Here"
-        android:paddingVertical="8dp"
-        android:paddingHorizontal="13dp"
-        android:textSize="16sp"
-        android:textColor="#5C5C5C"/>
+        android:background="@drawable/receiver_messages_layout">
+        <TextView
+            android:id="@+id/receiver_message_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Receiver Messages Here"
+            android:paddingVertical="8dp"
+            android:paddingHorizontal="13dp"
+            android:textSize="16sp"
+            android:textColor="#5C5C5C"/>
+        <TextView
+            android:id="@+id/receiver_message_time"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/receiver_message_text"
+            android:layout_centerHorizontal="true"
+            android:paddingBottom="8dp"
+            android:text="Time"
+            android:textSize="12dp"
+            android:paddingRight="5dp"
+            android:textColor="@color/colorGrey"
+            />
+    </RelativeLayout>
 
     <ImageView
         android:id="@+id/message_sender_image_view"

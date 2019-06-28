@@ -49,13 +49,16 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.MessageV
 
         public static final String MAPVIEW_BUNDLE_KEY = "MapViewBundleKey";
 
-        public TextView senderMessageText, receiverMessageText;
+        public TextView senderMessageText, receiverMessageText, senderMessageTime, receiverMessageTime;
         public ImageView messageSenderPicture, messageReceiverPicture, messageSenderFile, messageReceiverFile;
-        public View senderMapContainer;
+        public View receiverMessageContainer, senderMessageContainer, receiverImageContainer, senderImageContainer, reciverFileContainer, senderFileContainer;
+        public View receiverMapContainer, senderMapContainer;
         public MapView senderMapView, receiverMapView;
 
         public MessageViewHolder(@NonNull View itemView) {
             super(itemView);
+
+            receiverMessageContainer = itemView.findViewById(R.id.receiver_message_container);
 
             senderMessageText = itemView.findViewById(R.id.sender_message_text);
             receiverMessageText = itemView.findViewById(R.id.receiver_message_text);
@@ -66,6 +69,7 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.MessageV
             senderMapView = itemView.findViewById(R.id.sender_map_view);
             receiverMapView = itemView.findViewById(R.id.receiver_map_view);
 
+            receiverMessageTime = itemView.findViewById(R.id.receiver_message_time);
         }
     }
 
@@ -103,7 +107,7 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.MessageV
             }
         });
 
-        messageViewHolder.receiverMessageText.setVisibility(View.GONE);
+        messageViewHolder.receiverMessageContainer.setVisibility(View.GONE);
         messageViewHolder.senderMessageText.setVisibility(View.GONE);
         messageViewHolder.messageSenderPicture.setVisibility(View.GONE);
         messageViewHolder.messageReceiverPicture.setVisibility(View.GONE);
@@ -121,10 +125,10 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.MessageV
                 messageViewHolder.senderMessageText.setText(messages.getMessage() + "\n" + messages.getTime() + " - " + messages.getDate());
             }
             else {
-                messageViewHolder.receiverMessageText.setVisibility(View.VISIBLE);
+                messageViewHolder.receiverMessageContainer.setVisibility(View.VISIBLE);
 
-                messageViewHolder.receiverMessageText.setBackgroundResource(R.drawable.receiver_messages_layout);
-                messageViewHolder.receiverMessageText.setText(messages.getMessage() + "\n" + messages.getTime() + " - " + messages.getDate());
+                messageViewHolder.receiverMessageText.setText(messages.getMessage());
+                messageViewHolder.receiverMessageTime.setText(messages.getTime() + " - " + messages.getDate());
             }
         }
         else if(fromMessageType.equals("image")) {

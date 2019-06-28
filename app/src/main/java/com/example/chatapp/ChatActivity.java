@@ -91,17 +91,20 @@ public class ChatActivity extends AppCompatActivity {
     private String fileUrl;
     private ProgressDialog loadingBar;
 
-    MapView mMap;
-    private GoogleMap googleMap;
-
     private FusedLocationProviderClient client;
 
+    private Location currentLocation;
+    private LocationManager lm;
+
     private String latitude,longitude;
+    private double latituda, longituda;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_chat);
+
+        lm = (LocationManager)getSystemService(Context.LOCATION_SERVICE);
 
         mAuth = FirebaseAuth.getInstance();
         messageSenderID = mAuth.getCurrentUser().getUid();
@@ -181,6 +184,33 @@ public class ChatActivity extends AppCompatActivity {
                         else if(which == 3) {
                             checker = "location";
 
+                            final LocationListener locationListener = new LocationListener() {
+                                @Override
+                                public void onLocationChanged(Location location) {
+                                    lm.removeUpdates(this);
+
+                                    latituda = location.getLatitude();
+                                    longituda = location.getLongitude();
+
+                                    longitude = String.valueOf(longituda);
+                                    latitude = String.valueOf(latituda);
+                                }
+
+                                @Override
+                                public void onStatusChanged(String provider, int status, Bundle extras) {
+
+                                }
+
+                                @Override
+                                public void onProviderEnabled(String provider) {
+
+                                }
+
+                                @Override
+                                public void onProviderDisabled(String provider) {
+
+                                }
+                            };
 
                             if(ContextCompat.checkSelfPermission(ChatActivity.this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
                                 if(ActivityCompat.shouldShowRequestPermissionRationale(ChatActivity.this, Manifest.permission.ACCESS_FINE_LOCATION)) {
@@ -192,12 +222,18 @@ public class ChatActivity extends AppCompatActivity {
                                 }
                             }
                             else{
-                                LocationManager lm = (LocationManager)getSystemService(Context.LOCATION_SERVICE);
-                                Location location = lm.getLastKnownLocation(LocationManager.GPS_PROVIDER);
-                                double latituda = location.getLatitude();
-                                double longituda = location.getLongitude();
-                                latitude = String.valueOf(latituda);
-                                longitude = String.valueOf(longituda);
+                                currentLocation = lm.getLastKnownLocation(LocationManager.GPS_PROVIDER);
+                                if(currentLocation != null){
+                                    latituda = currentLocation.getLatitude();
+                                    longituda = currentLocation.getLongitude();
+                                    latitude = String.valueOf(latituda);
+                                    longitude = String.valueOf(longituda);
+
+                                }
+                                else{
+                                    lm.requestLocationUpdates(LocationManager.GPS_PROVIDER, 1000, 1, locationListener );
+                                }
+
 
                                 String messageSenderRef = "Messages/" + messageSenderID + "/" + messageReceiverID;
                                 String messageReceiverRef = "Messages/" + messageReceiverID + "/" + messageSenderID;
@@ -326,14 +362,47 @@ public class ChatActivity extends AppCompatActivity {
             case 1: {
                 if(grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
 
-                    LocationManager lm = (LocationManager)getSystemService(Context.LOCATION_SERVICE);
+                    final LocationListener locationListener = new LocationListener() {
+                        @Override
+                        public void onLocationChanged(Location location) {
+                            lm.removeUpdates(this);
+
+                            latituda = location.getLatitude();
+                            longituda = location.getLongitude();
+
+                            longitude = String.valueOf(longituda);
+                            latitude = String.valueOf(latituda);
+                        }
+
+                        @Override
+                        public void onStatusChanged(String provider, int status, Bundle extras) {
+
+                        }
+
+                        @Override
+                        public void onProviderEnabled(String provider) {
+
+                        }
+
+                        @Override
+                        public void onProviderDisabled(String provider) {
+
+                        }
+                    };
 
                     if(ContextCompat.checkSelfPermission(ChatActivity.this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-                        Location location = lm.getLastKnownLocation(LocationManager.GPS_PROVIDER);
-                        double latituda = location.getLatitude();
-                        double longituda = location.getLongitude();
-                        latitude = String.valueOf(latituda);
-                        longitude = String.valueOf(longituda);
+                        lm.requestLocationUpdates(LocationManager.GPS_PROVIDER, 1000,1, locationListener);
+                        currentLocation = lm.getLastKnownLocation(LocationManager.GPS_PROVIDER);
+                        if(currentLocation != null) {
+                            latituda = currentLocation.getLatitude();
+                            longituda = currentLocation.getLongitude();
+                            latitude = String.valueOf(latituda);
+                            longitude = String.valueOf(longituda);
+                        }else {
+                            lm.requestLocationUpdates(LocationManager.GPS_PROVIDER, 1000, 1, locationListener );
+                        }
+
+
                     }
 
                     String messageSenderRef = "Messages/" + messageSenderID + "/" + messageReceiverID;
@@ -517,46 +586,6 @@ public class ChatActivity extends AppCompatActivity {
                         }
                     }
                 });
-
-                //                else if(checker.equals("location")) {
-//
-//                    String messageSenderRef = "Messages/" + messageSenderID + "/" + messageReceiverID;
-//                    String messageReceiverRef = "Messages/" + messageReceiverID + "/" + messageSenderID;
-//
-//                    DatabaseReference userMessageKeyRef = RootRef.child("Messages")
-//                            .child(messageSenderID).child(messageReceiverID).push();
-//
-//                    String messagePushID = userMessageKeyRef.getKey();
-//
-//                    Map messageTextBody = new HashMap();
-//
-//                    messageTextBody.put("latitude", latitude);
-//                    messageTextBody.put("longitude", latitude);
-//                    messageTextBody.put("type", checker);
-//                    messageTextBody.put("from", messageSenderID);
-//                    messageTextBody.put("to", messageReceiverID);
-//                    messageTextBody.put("messageID", messagePushID);
-//                    messageTextBody.put("time", saveCurrentTime);
-//                    messageTextBody.put("date", saveCurrentDate);
-//
-//                    Map messageBodyDetails = new HashMap();
-//                    messageBodyDetails.put(messageSenderRef + "/" + messagePushID, messageTextBody);
-//                    messageBodyDetails.put(messageReceiverRef + "/" + messagePushID, messageTextBody);
-//
-//                    RootRef.updateChildren(messageBodyDetails).addOnCompleteListener(new OnCompleteListener() {
-//                        @Override
-//                        public void onComplete(@NonNull Task task) {
-//                            if(!task.isSuccessful()) {
-//                                Toast.makeText(ChatActivity.this, "Error", Toast.LENGTH_SHORT).show();
-//                            }
-//                            MessageInputText.setText("");
-//                        }
-//                    });
-//                }
-
-//            }
-
-
             }
             else {
                 loadingBar.dismiss();
